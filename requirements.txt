@@ -1,0 +1,6 @@
+git+https://github.com/LonamiWebs/Telethon.git
+aiohttp==3.9.1
+requests
+beautifulsoup4
+lxml
+pycryptodome
