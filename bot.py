@@ -89,6 +89,12 @@ E_STAR = PE("5289898724976240966", "⭐")
 E_POWERED = PE("6176952682989754426", "⚡")
 E_LINK = PE("5271604874419647061", "🔗")
 E_TOOLS = PE("5462921117423384478", "🛠️")
+E_DIAMOND = PE("6314557546753440004", "💎")
+E_ARROW = PE("5875450995332353523", "➡️")
+E_DIAMOND2 = PE("4961143940817355662", "💠")
+E_BOLT_WELCOME = PE("6176952682989754426", "⚡")
+E_CROWN = PE("6267128480601741166", "👑")
+E_UPGRADE = PE("6267128480601741166", "👑")
 
 E_LINE = PE("6329854094252970694", "➿")
 E_VERTICAL_LINE = PE("5319053559981959471", "🪭")
@@ -100,7 +106,6 @@ E_DASHBOARD = PE("6010080507616826629", "📊")
 E_BALANCE_ICON = PE("6147767796097884213", "💰")
 E_ROLE_ICON = PE("6147528944376618702", "👑")
 E_CHATID_ICON = PE("6010280773351904888", "✉️")
-E_BOLT_WELCOME = PE("6176952682989754426", "⚡")
 
 # ---- ICON IDs ----
 ICON_BOMB = 6314557546753440004
@@ -430,7 +435,7 @@ async def fire_bomber(session, target):
 
 # ---- 📊 FORMAT BOMBER RESULT ----
 
-def format_bomber_result(result, target):
+def format_bomber_result(result, target, burst_num=0):
     if not result.get("success"):
         return f"""<blockquote>{E_CROSS} Bᴏᴍʙᴇʀ Fᴀɪʟᴇᴅ
 
@@ -444,7 +449,7 @@ def format_bomber_result(result, target):
 
 {E_TARGET} Tᴀʀɢᴇᴛ: {result['target']}
 
-{E_BURST} Tʜɪs Bᴜʀsᴛ:
+{E_BURST} Tʜɪs Bᴜʀsᴛ #{burst_num}:
 {E_SMS} SMS: {result['this_burst_sms']}
 {E_CALL} Calls: {result['this_burst_calls']}
 {E_WHATSAPP} WhatsApp: {result['this_burst_whatsapp']}
@@ -637,7 +642,7 @@ async def bomber_loop(chat_id, target, initial_msg):
                 result = await fire_bomber(session, target)
             
             if result.get("success"):
-                result_text = format_bomber_result(result, target)
+                result_text = format_bomber_result(result, target, burst_count)
             else:
                 result_text = f"""<blockquote>{E_CROSS} Bᴏᴍʙᴇʀ Eʀʀᴏʀ
 
@@ -645,15 +650,9 @@ async def bomber_loop(chat_id, target, initial_msg):
 
 {E_TARGET} Target: {target}
 
-{BURST} Burst #{burst_count}
+{E_BURST} Burst #{burst_count}
 
 {E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>"""
-            
-            # Add burst counter
-            result_text = result_text.replace(
-                f"Rᴇғʀᴇsʜɪɴɢ ɪɴ 10s...",
-                f"Bᴜʀsᴛ #{burst_count} | Rᴇғʀᴇsʜɪɴɢ ɪɴ 10s..."
-            )
             
             try:
                 await edit_html(initial_msg, result_text, reply_markup=create_stop_markup())
@@ -661,22 +660,19 @@ async def bomber_loop(chat_id, target, initial_msg):
                 logger.error(f"Edit message error: {e}")
                 break
             
-            # Wait 10 seconds
+            # Wait 10 seconds with countdown
             for i in range(REFRESH_INTERVAL, 0, -1):
                 if not BOMBER_STATE[chat_id].get("active", False):
                     break
                 
-                # Update countdown
-                if i % 5 == 0 or i <= 3:
+                # Update countdown every 2 seconds
+                if i % 2 == 0 or i <= 3:
                     try:
-                        await edit_html(
-                            initial_msg,
-                            result_text.replace(
-                                f"Rᴇғʀᴇsʜɪɴɢ ɪɴ 10s...",
-                                f"Rᴇғʀᴇsʜɪɴɢ ɪɴ {i}s..."
-                            ),
-                            reply_markup=create_stop_markup()
+                        countdown_text = result_text.replace(
+                            f"Rᴇғʀᴇsʜɪɴɢ ɪɴ 10s...",
+                            f"Rᴇғʀᴇsʜɪɴɢ ɪɴ {i}s..."
                         )
+                        await edit_html(initial_msg, countdown_text, reply_markup=create_stop_markup())
                     except:
                         pass
                 await asyncio.sleep(1)
