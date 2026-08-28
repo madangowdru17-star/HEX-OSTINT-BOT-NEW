@@ -1,4 +1,4 @@
-# bomber_bot.py - Hex SMS/Call Bomber Bot with Auto-Refresh
+# link_shortener_bot.py - Advanced Link Bypass Bot with Mix Bomber
 
 import logging
 import asyncio
@@ -65,36 +65,56 @@ if not BOT_TOKEN:
 # ---- EMOJI IDs ----
 PE = lambda eid, fallback: f'<tg-emoji emoji-id="{eid}">{fallback}</tg-emoji>'
 
-# Bomber Emojis
-E_BOMB = PE("6314557546753440004", "💣")
-E_TARGET = PE("6122648774356504384", "🎯")
-E_SMS = PE("5456140674028019486", "📨")
-E_CALL = PE("5776213190387961618", "📞")
-E_WHATSAPP = PE("5877465816030515018", "💬")
-E_STATS = PE("5467683093693354332", "📊")
-E_BURST = PE("5377834924776627189", "⚡")
-E_CUMULATIVE = PE("5289898724976240966", "📈")
+# Link Shortener Emojis
+E_LINK_ORIGINAL = PE("6122648774356504384", "🔗")
+E_LINK_BYPASS = PE("5456140674028019486", "⚡")
+E_LINK_TIME = PE("5776213190387961618", "⏱️")
+E_LINK_ID = PE("5877465816030515018", "🔗")
+
+# Mix Bomber Emojis
+E_BOMB = PE("6267008582294705964", "💣")
+E_BOMBING = PE("5377834924776627189", "⚡")
+E_SMS = PE("5967591100532134862", "📱")
+E_CALL = PE("5406809207947142040", "📞")
+E_WHATSAPP = PE("5339534764367955381", "💬")
+E_TOTAL = PE("5289898724976240966", "📊")
 E_STOP = PE("6267000941547885720", "🛑")
 E_REFRESH = PE("5375338737028841420", "🔄")
-E_CLOCK = PE("5382194935057372936", "⏱️")
+E_TARGET = PE("5249053508681883137", "🎯")
+E_STATS = PE("6010080507616826629", "📈")
+E_NOTE = PE("5467683093693354332", "📝")
+E_BOOM = PE("6176952682989754426", "💥")
+
+# System Emojis
+E_DIAMOND = PE("6314557546753440004", "💎")
+E_LION = PE("5802980697886954454", "🦁")
+E_HAPPY = PE("6154369208076470797", "🥹")
+E_WALLET = PE("5256186332669035163", "👛")
+E_CROWN = PE("6267128480601741166", "👑")
+E_CAMERA = PE("6008258140108231117", "📸")
+E_ARROW = PE("5875450995332353523", "➡️")
+E_DIAMOND2 = PE("4961143940817355662", "💠")
+E_STAR = PE("5289898724976240966", "⭐")
+E_BOLT = PE("5377834924776627189", "⚡")
+E_POWERED = PE("6176952682989754426", "⚡")
+E_SEARCH = PE("5231012545799666522", "🔍")
 E_CHECK = PE("6267008582294705964", "✅")
 E_CROSS = PE("6267000941547885720", "❌")
 E_WARN = PE("6267039884016358504", "⚠️")
 E_LOCK = PE("5316522278056399236", "🔒")
 E_USERS = PE("5244933196230972438", "👥")
 E_CREDIT = PE("6267068789146260253", "💰")
+E_CLOCK = PE("5382194935057372936", "⏱️")
 E_GIFT = PE("5203996991054432397", "🎁")
-E_SPARKLE = PE("5467683093693354332", "✨")
-E_STAR = PE("5289898724976240966", "⭐")
-E_POWERED = PE("6176952682989754426", "⚡")
-E_LINK = PE("5271604874419647061", "🔗")
+E_TICKET = PE("5285515895534278367", "🎫")
 E_TOOLS = PE("5462921117423384478", "🛠️")
-E_DIAMOND = PE("6314557546753440004", "💎")
-E_ARROW = PE("5875450995332353523", "➡️")
-E_DIAMOND2 = PE("4961143940817355662", "💠")
-E_BOLT_WELCOME = PE("6176952682989754426", "⚡")
-E_CROWN = PE("6267128480601741166", "👑")
-E_UPGRADE = PE("6267128480601741166", "👑")
+E_HOME = PE("5280955052582785391", "🏠")
+E_SPARKLE = PE("5467683093693354332", "✨")
+E_ROCKET = PE("5195033767969839232", "🚀")
+E_STAR2 = PE("6266969287638913443", "🌟")
+E_LINK = PE("5271604874419647061", "🔗")
+E_GEAR = PE("5462921117423384478", "⚙️")
+E_WELCOME = PE("6266969287638913443", "✨")
 
 E_LINE = PE("6329854094252970694", "➿")
 E_VERTICAL_LINE = PE("5319053559981959471", "🪭")
@@ -106,14 +126,13 @@ E_DASHBOARD = PE("6010080507616826629", "📊")
 E_BALANCE_ICON = PE("6147767796097884213", "💰")
 E_ROLE_ICON = PE("6147528944376618702", "👑")
 E_CHATID_ICON = PE("6010280773351904888", "✉️")
+E_BOLT_WELCOME = PE("6176952682989754426", "⚡")
 
 # ---- ICON IDs ----
-ICON_BOMB = 6314557546753440004
-ICON_SMS = 5456140674028019486
-ICON_CALL = 5776213190387961618
-ICON_STOP = 6267000941547885720
-ICON_REFRESH = 5375338737028841420
-ICON_STATS = 5467683093693354332
+ICON_BYPASS = 5456140674028019486
+ICON_ORIGINAL = 6122648774356504384
+ICON_TIME = 5776213190387961618
+ICON_LINK = 5877465816030515018
 ICON_INVITE = 6048721430730773527
 ICON_UPGRADE = 5251422397893989847
 ICON_ADMIN = 5406711411541823609
@@ -121,6 +140,7 @@ ICON_JOIN1 = 5802980697886954454
 ICON_JOIN2 = 6154369208076470797
 ICON_VERIFY = 5289898724976240966
 ICON_NEXT = 5260450573768990626
+ICON_BOMBER = 5456140674028019486
 
 # ---- LOGGING ----
 logging.basicConfig(
@@ -131,27 +151,31 @@ logger = logging.getLogger(__name__)
 
 # ---- INIT BOT ----
 try:
-    client = TelegramClient('bomber_bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
+    client = TelegramClient('link_bot', API_ID, API_HASH).start(bot_token=BOT_TOKEN)
     print("✅ Bot connected successfully!")
 except Exception as e:
     print(f"❌ Bot connection failed: {e}")
     sys.exit(1)
 
 # ---- CONSTANTS ----
+BYPASS_API = "https://link-shorter-hex-production.up.railway.app/bypass?link="
 BOMBER_API = "https://bomber-hex-osint.vercel.app/start/"
 AUTO_DELETE_TIME = 60
 DAILY_FREE_CREDITS = 10
 INVITE_CREDITS = 3
-REFRESH_INTERVAL = 10  # seconds
 
 USERS_FILE = os.path.join(os.getcwd(), "users.json")
 REDEEM_FILE = os.path.join(os.getcwd(), "redeem_codes.json")
 SETTINGS_FILE = os.path.join(os.getcwd(), "settings.json")
 
 ADMIN_STATE = {}
-BOMBER_STATE = {}  # {chat_id: {"active": True, "target": "", "message_id": None}}
+USER_MODES = {}
 processed_messages = set()
 processing_lock = asyncio.Lock()
+
+# ---- BOMBER STATE ----
+bomber_tasks = {}
+bomber_stop = {}
 
 # ---- 💾 DATA FUNCTIONS ----
 
@@ -257,6 +281,7 @@ def get_settings():
         return load_json(SETTINGS_FILE)
     except:
         d = {
+            "bypass_maintenance": False,
             "maintenance_mode": False,
             "page": 1
         }
@@ -345,7 +370,8 @@ def create_main_menu(is_admin=False, settings=None):
     
     if page == 1:
         row1 = [
-            create_danger_button("💣 Sᴛᴀʀᴛ Bᴏᴍʙᴇʀ", ICON_BOMB)
+            create_primary_button("Lɪɴᴋ Bʏᴘᴀss", ICON_BYPASS),
+            create_primary_button("💣 Mɪx Bᴏᴍʙᴇʀ", ICON_BOMBER)
         ]
         rows.append(KeyboardButtonRow(buttons=row1))
         
@@ -366,7 +392,7 @@ def create_main_menu(is_admin=False, settings=None):
             create_danger_button("◀ Pʀᴇᴠɪᴏᴜs Pᴀɢᴇ", ICON_NEXT)
         ]))
         rows.append(KeyboardButtonRow(buttons=[
-            create_primary_button("📊 Sᴛᴀᴛs", ICON_STATS)
+            create_primary_button("📊 Sᴛᴀᴛs", ICON_TIME)
         ]))
     
     return ReplyKeyboardMarkup(rows=rows, resize=True)
@@ -389,88 +415,130 @@ def build_welcome_panel(uid, first_name, credits, premium=False):
 
 {E_VERTICAL_LINE} {E_CHATID_ICON} ʏᴏᴜʀ ɪᴅ » {uid}
 
-{E_VERTICAL_LINE} {E_BOMB} Sᴍs/Cᴀʟʟ Bᴏᴍʙᴇʀ
+{E_VERTICAL_LINE} {E_LINK_ORIGINAL} Lɪɴᴋ Bʏᴘᴀss
+{E_VERTICAL_LINE} {E_BOMB} Mɪx Bᴏᴍʙᴇʀ
 
 {line10}
-{E_ARROW} Sᴇɴᴅ ᴘʜᴏɴᴇ ɴᴜᴍʙᴇʀ ᴛᴏ ʙᴏᴍʙ
+{E_ARROW} Sᴇʟᴇᴄᴛ ᴀ ꜱᴇʀᴠɪᴄᴇ ʙᴇʟᴏᴡ
 
 {E_DIAMOND2} ꜱᴇʟᴇᴄᴛ ᴀ ꜱᴇʀᴠɪᴄᴇ ʙᴇʟᴏᴡ
 {line10}
 {E_BOLT_WELCOME} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}
 {line10}</blockquote>"""
 
-# ---- 🚀 BOMBER FUNCTION ----
+# ---- 🚀 BYPASS FUNCTION ----
 
-async def fire_bomber(session, target):
+async def bypass_link(session, link):
     try:
-        url = f"{BOMBER_API}{target}"
+        url = f"{BYPASS_API}{link}"
         async with session.get(url, timeout=30) as response:
             if response.status == 200:
                 data = await response.json()
                 if data.get("success"):
+                    response_text = data.get("response", "")
+                    
+                    original_match = re.search(r'\*\*Original Link :\*\*[✅]?\s*(https?://[^\s]+)', response_text)
+                    original = original_match.group(1) if original_match else link
+                    
+                    bypass_match = re.search(r'\*\*Bypassed Link:\*\*[✅]?\s*\*\*(https?://[^\s]+)\*\*', response_text)
+                    bypassed = bypass_match.group(1) if bypass_match else link
+                    
+                    time_match = re.search(r'\*\*Time Taken :\*\*\s*([0-9.]+)\s*seconds?', response_text)
+                    time_taken = time_match.group(1) if time_match else "0"
+                    
                     return {
-                        "success": True,
-                        "target": data.get("target", target),
-                        "total_apis_sent": data.get("total_apis_sent", 0),
-                        "sms": data.get("stats", {}).get("sms", 0),
-                        "calls": data.get("stats", {}).get("calls", 0),
-                        "whatsapp": data.get("stats", {}).get("whatsapp", 0),
-                        "total_success": data.get("stats", {}).get("total_success", 0),
-                        "this_burst_sms": data.get("this_burst", {}).get("sms", 0),
-                        "this_burst_calls": data.get("this_burst", {}).get("calls", 0),
-                        "this_burst_whatsapp": data.get("this_burst", {}).get("whatsapp", 0),
-                        "this_burst_total": data.get("this_burst", {}).get("total", 0),
-                        "cumulative_sms": data.get("cumulative_total", {}).get("sms", 0),
-                        "cumulative_calls": data.get("cumulative_total", {}).get("calls", 0),
-                        "cumulative_whatsapp": data.get("cumulative_total", {}).get("whatsapp", 0),
-                        "cumulative_total": data.get("cumulative_total", {}).get("total", 0)
+                        "original": original,
+                        "bypassed": bypassed,
+                        "time": time_taken,
+                        "success": True
                     }
                 else:
-                    return {"success": False, "error": "Bomber failed"}
+                    return {
+                        "error": data.get("error", "Unknown error"),
+                        "success": False
+                    }
             else:
-                return {"success": False, "error": f"API returned {response.status}"}
+                return {
+                    "error": f"API returned {response.status}",
+                    "success": False
+                }
     except Exception as e:
-        logger.error(f"Bomber error: {e}")
-        return {"success": False, "error": str(e)}
+        logger.error(f"Bypass error: {e}")
+        return {
+            "error": str(e),
+            "success": False
+        }
 
-# ---- 📊 FORMAT BOMBER RESULT ----
+# ---- 💣 MIX BOMBER FUNCTION ----
 
-def format_bomber_result(result, target, burst_num=0):
-    if not result.get("success"):
-        return f"""<blockquote>{E_CROSS} Bᴏᴍʙᴇʀ Fᴀɪʟᴇᴅ
+async def mix_bomber(chat_id, target, message_id=None):
+    bomber_stop[str(chat_id)] = False
+    loop_count = 0
+    
+    while not bomber_stop.get(str(chat_id), False):
+        try:
+            loop_count += 1
+            async with aiohttp.ClientSession() as session:
+                url = f"{BOMBER_API}{target}"
+                async with session.get(url, timeout=30) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        if data.get("success"):
+                            stats = data.get("stats", {})
+                            total_apis = data.get("total_apis_sent", 0)
+                            
+                            msg_text = f"""<blockquote>{E_BOMB} Mɪx Bᴏᴍʙᴇʀ Aᴄᴛɪᴠᴇ {E_BOMB}
 
-{E_TOOLS} Error: {result.get('error', 'Unknown')}
+{E_TARGET} Tᴀʀɢᴇᴛ: <code>{target}</code>
+{E_REFRESH} Rᴏᴜɴᴅ: #{loop_count}
 
-{E_TARGET} Target: {target}
+{E_STATS} Sᴛᴀᴛɪsᴛɪᴄs:
+{E_SMS} Sᴍs: {stats.get('sms', 0)}
+{E_CALL} Cᴀʟʟs: {stats.get('calls', 0)}
+{E_WHATSAPP} WʜᴀᴛsAᴘᴘ: {stats.get('whatsapp', 0)}
+{E_TOTAL} Tᴏᴛᴀʟ Sᴜᴄᴄᴇss: {stats.get('total_success', 0)}
+
+{E_NOTE} Tᴏᴛᴀʟ Aᴘɪs Sᴇɴᴛ: {total_apis}
+
+🔄 Aᴜᴛᴏ-Rᴇғʀᴇsʜ ɪɴ 11s...
 
 {E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>"""
+                            
+                            stop_btn = KeyboardButtonCallback(text=f"{E_STOP} Sᴛᴏᴘ Bᴏᴍʙɪɴɢ", data=f"stop_bomb_{chat_id}".encode())
+                            markup = ReplyInlineMarkup(rows=[KeyboardButtonRow(buttons=[stop_btn])])
+                            
+                            if message_id:
+                                try:
+                                    await client.edit_message(chat_id, message_id, msg_text, buttons=markup, parse_mode='html')
+                                except:
+                                    sent = await send_html(chat_id, msg_text, reply_markup=markup)
+                                    message_id = sent.id
+                            else:
+                                sent = await send_html(chat_id, msg_text, reply_markup=markup)
+                                message_id = sent.id
+                    
+        except Exception as e:
+            logger.error(f"Bomber error: {e}")
+        
+        for i in range(11):
+            if bomber_stop.get(str(chat_id), False):
+                break
+            await asyncio.sleep(1)
+    
+    final_msg = f"""<blockquote>{E_STOP} Bᴏᴍʙɪɴɢ Sᴛᴏᴘᴘᴇᴅ {E_STOP}
 
-    return f"""<blockquote>{E_BOMB} Hᴇx Bᴏᴍʙᴇʀ Aᴄᴛɪᴠᴇ {E_BOMB}
-
-{E_TARGET} Tᴀʀɢᴇᴛ: {result['target']}
-
-{E_BURST} Tʜɪs Bᴜʀsᴛ #{burst_num}:
-{E_SMS} SMS: {result['this_burst_sms']}
-{E_CALL} Calls: {result['this_burst_calls']}
-{E_WHATSAPP} WhatsApp: {result['this_burst_whatsapp']}
-{E_BURST} Total: {result['this_burst_total']}
-
-{E_CUMULATIVE} Cᴜᴍᴜʟᴀᴛɪᴠᴇ:
-{E_SMS} SMS: {result['cumulative_sms']}
-{E_CALL} Calls: {result['cumulative_calls']}
-{E_WHATSAPP} WhatsApp: {result['cumulative_whatsapp']}
-{E_CUMULATIVE} Total: {result['cumulative_total']}
-
-{E_CLOCK} Rᴇғʀᴇsʜɪɴɢ ɪɴ 10s...
+{E_TARGET} Tᴀʀɢᴇᴛ: <code>{target}</code>
+{E_REFRESH} Tᴏᴛᴀʟ Rᴏᴜɴᴅs: {loop_count}
 
 {E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>"""
-
-# ---- 🛑 STOP BUTTON ----
-
-def create_stop_markup():
-    style = KeyboardButtonStyle(bg_danger=True, icon=ICON_STOP)
-    button = KeyboardButtonCallback(text="🛑 Sᴛᴏᴘ Bᴏᴍʙɪɴɢ", data=b"stop_bomber", style=style)
-    return ReplyInlineMarkup(rows=[KeyboardButtonRow(buttons=[button])])
+    
+    if message_id:
+        try:
+            await client.edit_message(chat_id, message_id, final_msg, buttons=None, parse_mode='html')
+        except:
+            await send_html(chat_id, final_msg)
+    else:
+        await send_html(chat_id, final_msg)
 
 # ---- 📋 VERIFICATION PAGE ----
 
@@ -563,26 +631,12 @@ async def admin_callback_handler(event):
     if event.data and event.data.startswith(b"ad_"):
         await admin_callback(event)
 
-@client.on(events.CallbackQuery(data=b"stop_bomber"))
-async def stop_bomber_cb(event):
-    try:
-        chat_id = event.chat_id
-        if chat_id in BOMBER_STATE:
-            BOMBER_STATE[chat_id]["active"] = False
-            await event.answer("🛑 Bomber Stopped!", alert=True)
-            
-            # Update message
-            await event.edit(
-                f"""<blockquote>{E_CROSS} Bᴏᴍʙᴇʀ Sᴛᴏᴘᴘᴇᴅ
-
-{E_TARGET} Target: {BOMBER_STATE[chat_id].get('target', 'N/A')}
-
-{E_CLOCK} Total bursts: {BOMBER_STATE[chat_id].get('burst_count', 0)}
-
-{E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>"""
-            )
-    except Exception as e:
-        logger.error(f"Stop bomber error: {e}")
+@client.on(events.CallbackQuery)
+async def bomber_stop_callback(event):
+    if event.data and event.data.startswith(b"stop_bomb_"):
+        chat_id = int(event.data.decode().replace("stop_bomb_", ""))
+        bomber_stop[str(chat_id)] = True
+        await event.answer("✅ Bᴏᴍʙɪɴɢ Sᴛᴏᴘᴘᴇᴅ!", alert=True)
 
 async def send_welcome(event):
     try:
@@ -620,71 +674,6 @@ async def main_menu(event):
     else:
         markup = create_main_menu(is_admin, s)
         msg = await send_html(event.chat_id, welcome_text, reply_markup=markup)
-
-# ---- 🆕 BOMBER LOOP ----
-
-async def bomber_loop(chat_id, target, initial_msg):
-    """Auto-refresh loop for bomber"""
-    burst_count = 0
-    BOMBER_STATE[chat_id] = {
-        "active": True,
-        "target": target,
-        "burst_count": 0,
-        "message_id": initial_msg.id
-    }
-    
-    try:
-        while BOMBER_STATE[chat_id].get("active", False):
-            burst_count += 1
-            BOMBER_STATE[chat_id]["burst_count"] = burst_count
-            
-            async with aiohttp.ClientSession() as session:
-                result = await fire_bomber(session, target)
-            
-            if result.get("success"):
-                result_text = format_bomber_result(result, target, burst_count)
-            else:
-                result_text = f"""<blockquote>{E_CROSS} Bᴏᴍʙᴇʀ Eʀʀᴏʀ
-
-{E_TOOLS} Error: {result.get('error', 'Unknown')}
-
-{E_TARGET} Target: {target}
-
-{E_BURST} Burst #{burst_count}
-
-{E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>"""
-            
-            try:
-                await edit_html(initial_msg, result_text, reply_markup=create_stop_markup())
-            except Exception as e:
-                logger.error(f"Edit message error: {e}")
-                break
-            
-            # Wait 10 seconds with countdown
-            for i in range(REFRESH_INTERVAL, 0, -1):
-                if not BOMBER_STATE[chat_id].get("active", False):
-                    break
-                
-                # Update countdown every 2 seconds
-                if i % 2 == 0 or i <= 3:
-                    try:
-                        countdown_text = result_text.replace(
-                            f"Rᴇғʀᴇsʜɪɴɢ ɪɴ 10s...",
-                            f"Rᴇғʀᴇsʜɪɴɢ ɪɴ {i}s..."
-                        )
-                        await edit_html(initial_msg, countdown_text, reply_markup=create_stop_markup())
-                    except:
-                        pass
-                await asyncio.sleep(1)
-            
-            if not BOMBER_STATE[chat_id].get("active", False):
-                break
-    
-    except Exception as e:
-        logger.error(f"Bomber loop error: {e}")
-    finally:
-        if chat_id in BOMBER_STATE:
-            BOMBER_STATE[chat_id]["active"] = False
 
 # ---- 🆕 HELPERS ----
 
@@ -824,16 +813,11 @@ async def msg_handler(event):
                     await show_commands(event)
                     return
                 
-                if raw_cmd == '/bomb':
+                if raw_cmd == '/bypass':
                     parts = txt.split(maxsplit=1)
                     arg = parts[1] if len(parts) > 1 else None
                     if arg is None:
-                        m = await send_html(event.chat_id, f"<blockquote>{E_WARN} Please provide a phone number.\nExample: <code>/bomb 6363016966</code></blockquote>")
-                        asyncio.create_task(schedule_delete(m))
-                        return
-                    # Validate phone number
-                    if not re.match(r'^[0-9]{10,15}$', arg):
-                        m = await send_html(event.chat_id, f"<blockquote>{E_WARN} Invalid phone number. Use 10-15 digits.</blockquote>")
+                        m = await send_html(event.chat_id, f"<blockquote>{E_WARN} Please provide a link.\nExample: <code>/bypass https://earnlinks.in/WoivZ</code></blockquote>")
                         asyncio.create_task(schedule_delete(m))
                         return
                     user = get_user(uid)
@@ -849,7 +833,39 @@ async def msg_handler(event):
                         asyncio.create_task(schedule_delete(m))
                         return
                     use_credit(uid)
-                    await start_bomber(event, arg)
+                    async with aiohttp.ClientSession() as session:
+                        result = await bypass_link(session, arg)
+                    result_text = format_result(result, arg)
+                    sent = await send_html(event.chat_id, result_text)
+                    asyncio.create_task(schedule_delete(sent))
+                    return
+                
+                if raw_cmd == '/bomb':
+                    parts = txt.split(maxsplit=1)
+                    arg = parts[1] if len(parts) > 1 else None
+                    if arg is None:
+                        m = await send_html(event.chat_id, f"<blockquote>{E_WARN} Please provide a target number.\nExample: <code>/bomb 6363016966</code></blockquote>")
+                        asyncio.create_task(schedule_delete(m))
+                        return
+                    target = re.sub(r'[^0-9]', '', arg)
+                    if len(target) < 10:
+                        m = await send_html(event.chat_id, f"<blockquote>{E_CROSS} Invalid number. Please send a valid phone number.</blockquote>")
+                        asyncio.create_task(schedule_delete(m))
+                        return
+                    user = get_user(uid)
+                    if not user.get("verified"):
+                        if await check_channels(uid):
+                            user["verified"] = True
+                            save_user(uid, user)
+                        else:
+                            await show_verification_page(event)
+                            return
+                    if user.get("credits", 0) <= 0:
+                        m = await send_html(event.chat_id, f"<blockquote>{E_CROSS} No credits! +10 daily | +3 invite</blockquote>")
+                        asyncio.create_task(schedule_delete(m))
+                        return
+                    use_credit(uid)
+                    asyncio.create_task(mix_bomber(event.chat_id, target))
                     return
                 
                 if raw_cmd == '/invite':
@@ -889,7 +905,8 @@ async def msg_handler(event):
             
             # Button labels
             label_map = {
-                "💣 Sᴛᴀʀᴛ Bᴏᴍʙᴇʀ": ("BOMB", None),
+                "Lɪɴᴋ Bʏᴘᴀss": ("BYPASS", None),
+                "💣 Mɪx Bᴏᴍʙᴇʀ": ("BOMBER", None),
                 "Uᴘɢʀᴀᴅᴇ Tᴏ Pʀᴇᴍɪᴜᴍ": ("UPGRADE", None),
                 "Iɴᴠɪᴛᴇ & Eᴀʀɴ": ("INVITE", None),
                 "📊 Sᴛᴀᴛs": ("STATS", None)
@@ -897,7 +914,7 @@ async def msg_handler(event):
             
             if txt in label_map:
                 mode, _ = label_map[txt]
-                if mode == "BOMB":
+                if mode == "BYPASS":
                     user = get_user(uid)
                     if not user.get("verified"):
                         if await check_channels(uid):
@@ -907,13 +924,38 @@ async def msg_handler(event):
                             await show_verification_page(event)
                             return
                     credits = user.get("credits", 0)
-                    m = await send_html(event.chat_id, f"""<blockquote>{E_BOMB} Sᴍs/Cᴀʟʟ Bᴏᴍʙᴇʀ
+                    m = await send_html(event.chat_id, f"""<blockquote>{E_LINK_ORIGINAL} Lɪɴᴋ Bʏᴘᴀss
 
-Sᴇɴᴅ ᴘʜᴏɴᴇ ɴᴜᴍʙᴇʀ ᴛᴏ ʙᴏᴍʙ
-
-Eᴠᴇʀʏ ʀᴇǫᴜᴇsᴛ ᴜsᴇs 1 ᴄʀᴇᴅɪᴛ
+Sᴇɴᴅ ᴀɴʏ ʟɪɴᴋ ᴛᴏ ʙʏᴘᴀss
 
 {E_WALLET} Yᴏᴜʀ Cʀᴇᴅɪᴛs: {credits}
+
+Sᴇᴀʀᴄʜ Cᴏsᴛ: 1 Pᴏɪɴᴛ
+
+{E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>""")
+                    asyncio.create_task(schedule_delete(m))
+                    return
+                if mode == "BOMBER":
+                    user = get_user(uid)
+                    if not user.get("verified"):
+                        if await check_channels(uid):
+                            user["verified"] = True
+                            save_user(uid, user)
+                        else:
+                            await show_verification_page(event)
+                            return
+                    credits = user.get("credits", 0)
+                    m = await send_html(event.chat_id, f"""<blockquote>{E_BOMB} Mɪx Bᴏᴍʙᴇʀ
+
+Sᴇɴᴅ ᴛᴀʀɢᴇᴛ ɴᴜᴍʙᴇʀ ᴡɪᴛʜ ᴄᴏᴜɴᴛʀʏ ᴄᴏᴅᴇ
+
+Exᴀᴍᴘʟᴇ: 6363016966
+ᴏʀ
++916363016966
+
+{E_WALLET} Yᴏᴜʀ Cʀᴇᴅɪᴛs: {credits}
+
+Cᴏsᴛ: 1 Cʀᴇᴅɪᴛ
 
 {E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>""")
                     asyncio.create_task(schedule_delete(m))
@@ -942,8 +984,8 @@ Eᴠᴇʀʏ ʀᴇǫᴜᴇsᴛ ᴜsᴇs 1 ᴄʀᴇᴅɪᴛ
                 await main_menu(event)
                 return
             
-            # ---- BOMB ----
-            if re.match(r'^[0-9]{10,15}$', txt):
+            # ---- BYPASS LINK ----
+            if txt.startswith('http://') or txt.startswith('https://'):
                 user = get_user(uid)
                 if not user.get("verified"):
                     if await check_channels(uid):
@@ -956,42 +998,75 @@ Eᴠᴇʀʏ ʀᴇǫᴜᴇsᴛ ᴜsᴇs 1 ᴄʀᴇᴅɪᴛ
                     m = await send_html(event.chat_id, f"<blockquote>{E_CROSS} No credits! +10 daily | +3 invite</blockquote>")
                     asyncio.create_task(schedule_delete(m))
                     return
+                
+                processing = await send_html(
+                    event.chat_id,
+                    f"""<blockquote>{E_SEARCH} Pʀᴏᴄᴇssɪɴɢ ʏᴏᴜʀ ʟɪɴᴋ...
+
+{E_LINK_ORIGINAL} {txt}
+
+{E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>"""
+                )
+                
                 use_credit(uid)
-                await start_bomber(event, txt)
+                
+                async with aiohttp.ClientSession() as session:
+                    result = await bypass_link(session, txt)
+                
+                await processing.delete()
+                
+                result_text = format_result(result, txt)
+                sent = await send_html(event.chat_id, result_text)
+                asyncio.create_task(schedule_delete(sent, 90))
                 return
+            
+            # ---- BOMBER TARGET ----
+            if re.match(r'^[0-9+\s\-()]+$', txt):
+                target = re.sub(r'[^0-9]', '', txt)
+                if len(target) >= 10:
+                    user = get_user(uid)
+                    if not user.get("verified"):
+                        if await check_channels(uid):
+                            user["verified"] = True
+                            save_user(uid, user)
+                        else:
+                            await show_verification_page(event)
+                            return
+                    if user.get("credits", 0) <= 0:
+                        m = await send_html(event.chat_id, f"<blockquote>{E_CROSS} No credits! +10 daily | +3 invite</blockquote>")
+                        asyncio.create_task(schedule_delete(m))
+                        return
+                    
+                    use_credit(uid)
+                    asyncio.create_task(mix_bomber(event.chat_id, target))
+                    return
             
         except Exception as e:
             logger.error(f"Msg handler error: {e}")
 
-# ---- 🚀 START BOMBER ----
+# ---- 📋 FORMAT RESULT ----
 
-async def start_bomber(event, target):
-    chat_id = event.chat_id
-    
-    # Check if bomber is already running
-    if chat_id in BOMBER_STATE and BOMBER_STATE[chat_id].get("active", False):
-        m = await send_html(
-            chat_id,
-            f"<blockquote>{E_WARN} Bᴏᴍʙᴇʀ ᴀʟʀᴇᴀᴅʏ ʀᴜɴɴɪɴɢ!\n\n{E_TARGET} Target: {BOMBER_STATE[chat_id].get('target', 'N/A')}\n\nClick STOP to end current session.</blockquote>"
-        )
-        asyncio.create_task(schedule_delete(m, 30))
-        return
-    
-    # Initial message
-    initial_msg = await send_html(
-        chat_id,
-        f"""<blockquote>{E_BOMB} Sᴛᴀʀᴛɪɴɢ Bᴏᴍʙᴇʀ...
+def format_result(result, original_link):
+    if not result.get("success"):
+        return f"""<blockquote>{E_CROSS} Bʏᴘᴀss Fᴀɪʟᴇᴅ
 
-{E_TARGET} Target: {target}
+{E_TOOLS} Error: {result.get('error', 'Unknown')}
 
-{E_CLOCK} Fɪʀsᴛ ʙᴜʀsᴛ ɪɴɪᴛɪᴀᴛɪɴɢ...
+{E_LINK_ORIGINAL} Original: {original_link}
 
-{E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>""",
-        reply_markup=create_stop_markup()
-    )
-    
-    # Start bomber loop
-    asyncio.create_task(bomber_loop(chat_id, target, initial_msg))
+{E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>"""
+
+    return f"""<blockquote>{E_SPARKLE} Lɪɴᴋ Bʏᴘᴀss Sᴜᴄᴄᴇssғᴜʟ {E_SPARKLE}
+
+{E_LINK_ORIGINAL} Oʀɪɢɪɴᴀʟ Lɪɴᴋ:
+{result['original']}
+
+{E_LINK_BYPASS} Bʏᴘᴀssᴇᴅ Lɪɴᴋ:
+{result['bypassed']}
+
+{E_LINK_TIME} Tɪᴍᴇ Tᴀᴋᴇɴ: {result['time']} seconds
+
+{E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>"""
 
 # ---- 📊 STATS ----
 
@@ -1022,7 +1097,8 @@ async def show_commands(event):
     txt = f"""<blockquote>{E_DIAMOND} Aᴠᴀɪʟᴀʙʟᴇ Cᴏᴍᴍᴀɴᴅs {E_DIAMOND}
 
 <b>Slash commands (use in any chat):</b>
-/bomb <code>6363016966</code> – Start SMS/Call bombing
+/bypass <code>https://earnlinks.in/WoivZ</code> – Bypass any link
+/bomb <code>6363016966</code> – Start Mix Bomber
 /invite – Get your invite link
 /upgrade – Premium upgrade info
 /stats – Your statistics
@@ -1031,20 +1107,18 @@ async def show_commands(event):
 <b>Menu buttons</b> (private chat only)
 Blue buttons for services, Green for Invite/Upgrade, Red for navigation.
 
-<b>⚠️ Rate Limit:</b> 10 seconds auto-refresh
-
 {E_POWERED} ᴘᴏᴡᴇʀᴇᴅ ʙʏ @HeX_CiPhEr {E_STAR}</blockquote>"""
     return await send_html(event.chat_id, txt)
 
 # ---- 🚀 START ----
 
 async def main():
-    print("🚀 HEX SMS/CALL BOMBER BOT STARTED")
+    print("🚀 LINK SHORTENER BYPASS BOT STARTED")
     print("✅ Premium Emojis Enabled")
     print("✅ Button Colors Active")
-    print(f"✅ API: {BOMBER_API}")
-    print("✅ Auto-Refresh: 10 seconds")
-    print("✅ Stop Button: Active")
+    print("✅ Mix Bomber Feature Added")
+    print(f"✅ Bypass API: {BYPASS_API}")
+    print(f"✅ Bomber API: {BOMBER_API}")
     print("✅ Admin Panel Ready")
     print("✅ Invite & Credit System Active")
     await client.start(bot_token=BOT_TOKEN)
